@@ -1,8 +1,8 @@
 #include "task1.h"
 
-void task1() {
+void task1(const std::string& filename) {
     std::vector<int> arr;
-    if (!file2vec("../OpenMP/src/t1_data.txt", arr)) {
+    if (!file2vec(filename, arr)) {
         std::cout << "Error in task 1" << std::endl;
         return;
     }
