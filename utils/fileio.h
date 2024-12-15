@@ -30,7 +30,7 @@
  *
  * @example
  * std::vector<double> vec;
- * bool success = readVectorFromFile("data.txt", vec);
+ * bool success = file2vec("data.txt", vec);
  * if (success) {
  *     // Process the vector
  * } else {
@@ -38,7 +38,7 @@
  * }
  */
 template<typename T>
-bool readVectorFromFile(const std::string& filename, std::vector<T>& vec) {
+bool file2vec(const std::string& filename, std::vector<T>& vec) {
     std::ifstream file(filename);
     if (!file) {
         std::cerr << "Error opening file: " << filename << std::endl;
