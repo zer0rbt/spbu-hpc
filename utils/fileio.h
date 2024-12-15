@@ -1,5 +1,5 @@
-#ifndef FILEIO_H
-#define FILEIO_H
+#ifndef SPBU_HPC_FILEIO_H
+#define SPBU_HPC_FILEIO_H
 
 #include <vector>
 #include <string>
