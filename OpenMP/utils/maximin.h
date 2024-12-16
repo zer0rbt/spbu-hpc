@@ -8,14 +8,14 @@
 
 template<typename T>
 T maxFromMin(std::vector<std::vector<T>> matrix) {
-    int n = matrix.size();
-    int m = matrix[0].size();
-    int max_value = std::numeric_limits<int>::min();
+    long int n = matrix.size();
+    long int m = matrix[0].size();
+    T max_value = std::numeric_limits<T>::min();
 
-    for (int i = 0; i < n; i++) {
-        int min_value = std::numeric_limits<int>::max();
+    for (long int i = 0; i < n; i++) {
+        T min_value = std::numeric_limits<T>::max();
 #pragma omp parallel for reduction(min:min_value)
-        for (int j = 0; j < m; j++) {
+        for (long int j = 0; j < m; j++) {
             if (matrix[i][j] < min_value) {
                 min_value = matrix[i][j];
             }
@@ -27,14 +27,14 @@ T maxFromMin(std::vector<std::vector<T>> matrix) {
 
 template<typename T>
 T highlyParallelMaxFromMin(std::vector<std::vector<T>> matrix) {
-    int n = matrix.size();
-    int m = matrix[0].size();
-    int max_value = std::numeric_limits<int>::min();
+    long int n = matrix.size();
+    long int m = matrix[0].size();
+    T max_value = std::numeric_limits<T>::min();
 #pragma omp parallel for reduction(max:max_value)
-    for (int i = 0; i < n; i++) {
-        int min_value = std::numeric_limits<int>::max();
+    for (long int i = 0; i < n; i++) {
+        T min_value = std::numeric_limits<T>::max();
 #pragma omp parallel for reduction(min:min_value)
-        for (int j = 0; j < m; j++) {
+        for (long int j = 0; j < m; j++) {
             if (matrix[i][j] < min_value) {
                 min_value = matrix[i][j];
             }
