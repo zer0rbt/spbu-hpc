@@ -5,6 +5,7 @@
 #include <omp.h>
 #include <limits>
 #include <iostream>
+#include "../../utils/fileio.h"
 
 template<typename T>
 T scalarProd(std::vector<T> vec1, std::vector<T> vec2){
@@ -19,6 +20,18 @@ T scalarProd(std::vector<T> vec1, std::vector<T> vec2){
         product += vec1[i] * vec2[i];
     }
     return product;
+}
+
+template<typename T>
+std::vector<T> files2scalarProd(const std::vector<std::string>& filenames){
+    std::vector<T> out(filenames.size(), 0);
+
+    for (int i =0; i < filenames.size();i++){
+#pragma omp parallel
+#pragma omp sections nowait
+#pragma omp section
+
+    }
 }
 
 #endif //SPBU_HPC_SCALARPRODUCT_H
