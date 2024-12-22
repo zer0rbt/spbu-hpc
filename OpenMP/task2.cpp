@@ -8,6 +8,6 @@ void task2(const std::string& vec1_file, const std::string& vec2_file){
     }
     std::cout<< "Scalar product is:" << scalarProd(vec1, vec2)<<std::endl;
     std::string name = "scalarProd";
-    measureExecutionTime(scalarProd<float>, vec1, vec2, name);
+    printExecutionTime(scalarProd<float>, vec1, vec2, name);
 
 }

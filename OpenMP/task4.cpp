@@ -10,5 +10,5 @@ void task4(const std::string& filename){
 
     std::cout << "Matrix dismensions = " << matrix.size() << "x" << matrix[0].size() << std::endl;
     std::cout << "Max from mins is " << maxFromMin(matrix) << std::endl;
-    measureExecutionTime(maxFromMin<int>, matrix, "maximin (standart)");
+    printExecutionTime(maxFromMin<int>, matrix, "maximin (standart)");
 }
