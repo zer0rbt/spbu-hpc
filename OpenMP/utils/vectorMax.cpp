@@ -41,3 +41,15 @@ int maxNoReduction(std::vector<int> &vec) {
     }
     return max_value;
 }
+
+int sequentialMaxReduction(std::vector<int> &vec) {
+    int n = vec.size();
+
+    int max_value = std::numeric_limits<int>::min();
+    for (int i = 0; i < n; ++i) {
+        if (vec[i] > max_value) {
+            max_value = vec[i];
+        }
+    }
+    return max_value;
+}

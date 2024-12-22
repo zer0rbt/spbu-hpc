@@ -26,4 +26,6 @@ int maxReduction(std::vector<int> &vec);
  */
 int maxNoReduction(std::vector<int> &vec);
 
+int sequentialMaxReduction(std::vector<int> &vec);
+
 #endif //SPBU_HPC_VECTORMAX_H
