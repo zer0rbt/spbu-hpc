@@ -24,13 +24,13 @@
  *
  * @example
  * std::vector<int> data = {1, 2, 3, 4, 5};
- * measureExecutionTime(exampleFunction, data, "exampleFunction");
+ * printExecutionTime(exampleFunction, data, "exampleFunction");
  *
  * @note The function measures the time using `std::chrono::high_resolution_clock` and outputs
  *       the duration in seconds.
  */
 template<typename Func, typename T>
-void measureExecutionTime(Func func, std::vector<T> &vec, const std::string &func_name) {
+void printExecutionTime(Func func, std::vector<T> &vec, const std::string &func_name) {
     auto start = std::chrono::high_resolution_clock::now();
     func(vec);
     auto end = std::chrono::high_resolution_clock::now();
@@ -58,13 +58,13 @@ void measureExecutionTime(Func func, std::vector<T> &vec, const std::string &fun
  * @example
  * std::vector<float> data1 = {1.1, 2.2, 3.3, 4.4, 5.5};
  * std::vector<float> data2 = {6.6, 7.7, 8.8, 9.9, 10.10};
- * measureExecutionTime(exampleFunction, data1, data2, "exampleFunction");
+ * printExecutionTime(exampleFunction, data1, data2, "exampleFunction");
  *
  * @note The function measures the time using `std::chrono::high_resolution_clock` and outputs
  *       the duration in seconds.
  */
 template<typename Func, typename T>
-void measureExecutionTime(Func func, std::vector<T> &vec1, std::vector<T> &vec2, const std::string &func_name) {
+void printExecutionTime(Func func, std::vector<T> &vec1, std::vector<T> &vec2, const std::string &func_name) {
     auto start = std::chrono::high_resolution_clock::now();
     func(vec1, vec2);
     auto end = std::chrono::high_resolution_clock::now();
