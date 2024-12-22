@@ -33,7 +33,7 @@ T triangularMaxFromMin(std::vector<std::vector<T>> matrix) {
 #pragma omp parallel for schedule(guided) reduction(max:max_value)
     for (long int i = 0; i < n; i++) {
         T min_value = std::numeric_limits<T>::max();
-        for (long int j = 0; j < m; j++) {
+        for (long int j = 0; j <= i; j++) {
             if (matrix[i][j] < min_value) {
                 min_value = matrix[i][j];
             }
