@@ -121,4 +121,35 @@ bool file2matrix(const std::string &filename, std::vector<std::vector<T>> &matri
     return true;
 }
 
-#endif // FILEIO_H
+/**
+ * @brief Writes a vector of vectors (matrix) of arbitrary elements to a file.
+ *
+ * This function takes a vector of vectors of arbitrary elements (template type),
+ * and writes each element to a file, with elements of an inner vector separated
+ * by spaces and each inner vector written on a new line.
+ *
+ * @tparam T The type of the elements in the vector.
+ * @param vecOfVecs The vector of vectors to be written to the file.
+ * @param filename The name of the file where the data will be written.
+ */
+template <typename T>
+void matrix2file(const std::vector<std::vector<T>>& vecOfVecs, const std::string& filename) {
+    std::ofstream outFile(filename);
+
+    if (!outFile) {
+        std::cerr << "Error opening file for writing!" << std::endl;
+        return;
+    }
+
+    for (const auto& innerVec : vecOfVecs) {
+        for (const auto& elem : innerVec) {
+            outFile << elem << " ";
+        }
+        outFile << "\n";
+    }
+
+    outFile.close();
+
+}
+
+#endif // SPBU_HPC_FILEIO_H
