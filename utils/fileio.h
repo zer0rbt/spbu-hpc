@@ -152,4 +152,43 @@ void matrix2file(const std::vector<std::vector<T>>& vecOfVecs, const std::string
 
 }
 
+/**
+ * @brief Writes a vector of arbitrary elements to a file.
+ *
+ * This function writes the elements of a given vector to a file. Each element
+ * is written on a new line in the file.
+ *
+ * @tparam T The type of elements in the vector (e.g., `int`, `float`, `double`, etc.).
+ *
+ * @param vec The vector to be written to the file.
+ * @param filename The name of the file where the data will be written.
+ *
+ * @return `true` if the file was successfully written; `false` otherwise.
+ *
+ * @example
+ * std::vector<int> vec = {1, 2, 3, 4, 5};
+ * bool success = vec2file(vec, "output.txt");
+ * if (success) {
+ *     std::cout << "Vector successfully written to file." << std::endl;
+ * } else {
+ *     std::cerr << "Failed to write vector to file." << std::endl;
+ * }
+ */
+template <typename T>
+bool vec2file(const std::vector<T>& vec, const std::string& filename) {
+    std::ofstream outFile(filename);
+
+    if (!outFile) {
+        std::cerr << "Error opening file for writing: " << filename << std::endl;
+        return false;
+    }
+
+    for (const auto& elem : vec) {
+        outFile << elem << "\n";
+    }
+
+    outFile.close();
+    return true;
+}
+
 #endif // SPBU_HPC_FILEIO_H
