@@ -4,6 +4,10 @@
 
 #include <vector>
 #include <limits>
+#include <tuple>
+
+#include "vectorMin.h"
+
 
 
 template<typename T>
@@ -65,33 +69,36 @@ T bandMaxFromMin(std::vector<std::vector<T>> matrix, long int bandWidth) {
     return max_value;
 }
 
-//todo
 template<typename T>
-T toeplitzMaxFromMin(std::vector<std::vector<T>> matrix, long int bandWidth) {
-
+T toeplitzMaxFromMin(std::vector<std::vector<T>> matrix) {
     long int n = matrix.size();
     long int m = matrix[0].size();
-    T max_value = std::numeric_limits<T>::min();
-    T min_value = std::numeric_limits<T>::max();
-#pragma omp parallel reduction(max:max_value)
-#pragma omp sections
-#pragma omp section
-    for (long int i = 0; i < m; i++) {
-        if (matrix[0][i] < min_value) {
-            min_value = matrix[0][i];
-        }
-    }
-    max_value = std::max(max_value, min_value);
-#pragma omp section
-    for (long int i = 0; i < m; i++) {
-        if (matrix[n - 1][i] < min_value) {
-            min_value = matrix[n - 1][i];
-        }
-    }
-    max_value = std::max(max_value, min_value);
 
-    return max_value;
+    T global_max = std::numeric_limits<T>::min();
+
+#pragma omp parallel reduction(max:global_max)
+    {
+        T local_min = std::numeric_limits<T>::max();
+        long local_min_ind = -1;
+
+#pragma omp for
+        for (long int i = 0; i < n; ++i) {
+            if (local_min_ind == -1 || local_min_ind >= m) {
+                std::tie(local_min, local_min_ind) = minIReduction(matrix[i]);
+            } else {
+                if (local_min >= matrix[i][0]) {
+                    local_min = matrix[i][0];
+                    local_min_ind = 0;
+                    global_max = std::max(global_max, local_min);
+                }
+            }
+            local_min_ind++;
+        }
+    }
+
+    return global_max;
 }
+
 
 template<typename T>
 T highlyParallelMaxFromMin(std::vector<std::vector<T>> matrix) {
