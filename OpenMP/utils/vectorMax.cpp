@@ -50,20 +50,18 @@ int sequentialMaxReduction(std::vector<int> &vec) {
     return max_value;
 }
 
-int maxAtomic(std::vector<int> &vec) {
-    int n = vec.size();
+/*int maxAtomic(std::vector<int>& vec) {
     int max_value = std::numeric_limits<int>::min();
 
 #pragma omp parallel for
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < vec.size(); ++i) {
 #pragma omp atomic
-        if (vec[i] > max_value) {
-            max_value = vec[i];
-        }
+        max_value = std::max(max_value, vec[i]);
     }
+
     return max_value;
 }
-
+*/
 int maxCritical(std::vector<int> &vec) {
     int n = vec.size();
     int max_value = std::numeric_limits<int>::min();

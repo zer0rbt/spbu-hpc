@@ -67,9 +67,9 @@ int maxCritical(std::vector<int> &vec);
 int maxLock(std::vector<int> &vec);
 
 /**
- * @brief Finds the maximum value in a vector using atomic operations for synchronization.
+ * @brief DOES NOT WORK YET. \n Finds the maximum value in a vector using atomic operations for synchronization.
  *
- * This function uses OpenMP's `#pragma omp atomic` directive to safely update
+ * \n This function uses OpenMP's `#pragma omp atomic` directive to safely update
  * the shared maximum value variable. Atomic operations ensure thread safety
  * without requiring locks or critical sections.
  *

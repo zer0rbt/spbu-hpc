@@ -5,6 +5,7 @@
 #include <vector>
 #include <limits>
 #include <tuple>
+#include <omp.h>
 
 #include "vectorMin.h"
 
@@ -15,10 +16,9 @@ T maxFromMin(std::vector<std::vector<T>> matrix) {
     long int n = matrix.size();
     long int m = matrix[0].size();
     T max_value = std::numeric_limits<T>::min();
-
+#pragma omp parallel for reduction(max:max_value)
     for (long int i = 0; i < n; i++) {
         T min_value = std::numeric_limits<T>::max();
-#pragma omp parallel for reduction(min:min_value)
         for (long int j = 0; j < m; j++) {
             if (matrix[i][j] < min_value) {
                 min_value = matrix[i][j];
@@ -30,7 +30,7 @@ T maxFromMin(std::vector<std::vector<T>> matrix) {
 }
 
 template<typename T>
-T triangularMaxFromMin(std::vector<std::vector<T>> matrix) {
+T triangularGuidedMaxFromMin(std::vector<std::vector<T>> matrix) {
     long int n = matrix.size();
     long int m = matrix[0].size();
     T max_value = std::numeric_limits<T>::min();
@@ -43,11 +43,52 @@ T triangularMaxFromMin(std::vector<std::vector<T>> matrix) {
             }
         }
         if (i < n - 1)
-            min_value = std::min(min_value, 0);
+            min_value = std::min(min_value, (T)0);
         max_value = std::max(max_value, min_value);
     }
     return max_value;
 }
+
+template<typename T>
+T triangularStaticMaxFromMin(std::vector<std::vector<T>> matrix) {
+    long int n = matrix.size();
+    long int m = matrix[0].size();
+    T max_value = std::numeric_limits<T>::min();
+#pragma omp parallel for schedule(static) reduction(max:max_value)
+    for (long int i = 0; i < n; i++) {
+        T min_value = std::numeric_limits<T>::max();
+        for (long int j = 0; j <= i; j++) {
+            if (matrix[i][j] < min_value) {
+                min_value = matrix[i][j];
+            }
+        }
+        if (i < n - 1)
+            min_value = std::min(min_value, (T)0);
+        max_value = std::max(max_value, min_value);
+    }
+    return max_value;
+}
+
+template<typename T>
+T triangularDynamicMaxFromMin(std::vector<std::vector<T>> matrix) {
+    long int n = matrix.size();
+    long int m = matrix[0].size();
+    T max_value = std::numeric_limits<T>::min();
+#pragma omp parallel for schedule(dynamic) reduction(max:max_value)
+    for (long int i = 0; i < n; i++) {
+        T min_value = std::numeric_limits<T>::max();
+        for (long int j = 0; j <= i; j++) {
+            if (matrix[i][j] < min_value) {
+                min_value = matrix[i][j];
+            }
+        }
+        if (i < n - 1)
+            min_value = std::min(min_value, (T)0);
+        max_value = std::max(max_value, min_value);
+    }
+    return max_value;
+}
+
 
 template<typename T>
 T bandMaxFromMin(std::vector<std::vector<T>> matrix, long int bandWidth) {
@@ -64,7 +105,7 @@ T bandMaxFromMin(std::vector<std::vector<T>> matrix, long int bandWidth) {
                 min_value = matrix[i][j];
             }
         }
-        max_value = std::max(max_value, std::min(min_value, 0));
+        max_value = std::max(max_value, std::min(min_value, (T)0));
     }
     return max_value;
 }

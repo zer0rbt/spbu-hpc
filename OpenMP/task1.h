@@ -2,11 +2,13 @@
 #define SPBU_HPC_TASK1_H
 
 #include <vector>
+#include <omp.h>
 #include "../utils/fileio.h"
 #include "../utils/timer.h"
 
 #include "utils/vectorMin.h"
 #include "utils/vectorMax.h"
+#include "utils/randVecs.h"
 /**
  * @brief Main function to perform the task of finding maximum and minimum values.
  *
@@ -18,4 +20,6 @@
  *                 the path to the file.
  */
 void task1(const std::string& filename);
+
+void testTask1(const std::string& filename);
 #endif //SPBU_HPC_TASK1_H

@@ -1,6 +1,7 @@
 #ifndef SPBU_HPC_TESTER_H
 #define SPBU_HPC_TESTER_H
 
+#include <functional>
 #include "fileio.h"
 /**
  * @brief Processes files and stores the result of a function applied to each file's content.
@@ -14,23 +15,24 @@
  * @param numFiles The number of files to process.
  * @param filename The name of the file where results will be saved.
  */
-template <typename T>
-void processFilesAndSaveResults(
-        std::function<T(const std::vector<int>&)> func,
-        int numFiles,
-        const std::string& filename)
+template <typename T, typename T_ARG>
+void processFilesAndSaveResults(std::function<T(const std::vector<T_ARG>&)> func,std::vector<std::string>& inFilenames, std::string& outFilename)
 {
+    long int numFiles = inFilenames.size();
     std::vector<std::vector<int>> results;
 
     for (int i = 0; i < numFiles; ++i) {
-        std::vector<int> arg = readFile(i);
+        std::vector<T_ARG> arg;
+        if (!file2vec(inFilenames[i], arg)){
+            break;
+        };
 
         T funcResult = func(arg);
 
         results.push_back({funcResult, static_cast<int>(arg.size())});
     }
 
-    writeToFile(results, filename);
+    vec2file(results, outFilename);
 }
 
 #endif //SPBU_HPC_TESTER_H
